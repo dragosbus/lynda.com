@@ -1,5 +1,6 @@
 const Main = (function() {
     let form, nameInput, messagesDiv;
+    const nameColors = ['rgb(12, 90, 206)', 'rgb(82, 16, 168)', 'rgb(179, 3, 149)', 'rgb(31, 190, 58)'];
     
     const init = () => {
         form = document.getElementById('form');
@@ -16,8 +17,10 @@ const Main = (function() {
     };
 
     const addMessage = msg => {
-        const children = `<div>
-            <h4>${msg.name}</h4>
+        const randomColorIndex = Math.floor(Math.random() * nameColors.length);
+        
+        const children = `<div class="msg">
+            <h4 style="color: ${nameColors[randomColorIndex]}">${msg.name}</h4>
             <p>${msg.message}</p>
         </div>`;
 
