@@ -10,7 +10,7 @@ const Main = (function () {
 
         form.addEventListener('submit', e => {
             e.preventDefault();
-            fetch('http://localhost:3000', {
+            fetch('http://192.168.0.104:3000', {
                     method: 'post',
                     headers: {
                         'Content-Type': 'application/json'
@@ -21,14 +21,13 @@ const Main = (function () {
                     })
                 }).then(res => res.json())
                 .then(data => {
-                    messagesDiv.innerHTML += addMessage(data[data.length - 1]);
+                    console.log(data);
                 })
                 .catch(err => alert(err));
-
-                socketIo();
         });
 
         fetchMessages();
+        socketIo();
     };
 
     const addMessage = msg => {
@@ -43,7 +42,7 @@ const Main = (function () {
     };
 
     const fetchMessages = () => {
-        fetch('http://localhost:3000/messages')
+        fetch('http://192.168.0.104:3000/messages')
             .then(res => res.json())
             .then(data => {
                 data.forEach(msg => {
@@ -54,10 +53,10 @@ const Main = (function () {
 
     const socketIo = () => {
         let socket = io();
-        socket.on('message', data=>{
+        socket.on('message', data => {
             console.log(data);
             messagesDiv.innerHTML += addMessage(data);
-         });
+        });
     }
 
     return {
