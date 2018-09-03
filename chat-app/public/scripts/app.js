@@ -24,6 +24,8 @@ const Main = (function () {
                     messagesDiv.innerHTML += addMessage(data[data.length - 1]);
                 })
                 .catch(err => alert(err));
+
+                socketIo();
         });
 
         fetchMessages();
@@ -49,6 +51,14 @@ const Main = (function () {
                 });
             });
     };
+
+    const socketIo = () => {
+        let socket = io();
+        socket.on('message', data=>{
+            console.log(data);
+            messagesDiv.innerHTML += addMessage(data);
+         });
+    }
 
     return {
         init

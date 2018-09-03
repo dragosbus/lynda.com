@@ -2,9 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded())
+app.use(bodyParser.urlencoded({extended: false}))
 
 const messages = [{
     name: 'dragos',
@@ -41,9 +43,14 @@ app.post('/', (req, res) => {
             message
         });
         res.status(200).json(messages);
+        io.emit('message', req.body);
     }
 });
 
-app.listen(3000, () => {
+io.on('connection', socket=>{
+    console.log('socket connection');
+});
+
+http.listen(3000, () => {
     console.log('Listen on 3000');
 });
