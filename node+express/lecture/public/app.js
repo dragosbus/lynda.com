@@ -30,6 +30,36 @@
         }
     };
 
+    const submitFeedback = e => {
+        e.preventDefault();
+        fetch('http://localhost:3000/feedback', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: document.getElementById('name').value,
+                message: document.getElementById('message').value
+            })
+        });
+    };
+
+    const getFeedbacks = () => {
+        fetch('./feedback.json').then(res => res.json())
+            .then(data => {
+                data.forEach(feed => {
+                    document.getElementById('feedback').innerHTML += `
+                <div>
+                    <p>${feed.name}</p>
+                    <p>${feed.message}</p>
+                </div>
+            `
+                });
+            });
+    };
+
+    getFeedbacks();
+
     getData('http://localhost:3000/users')
         .then(data => {
             console.log(data)
@@ -39,4 +69,6 @@
             document.querySelector('main').innerHTML = appendDataToDOM(state.users);
         })
         .catch(err => console.log(err));
+
+    document.getElementById('form').addEventListener('submit', submitFeedback);
 })();
