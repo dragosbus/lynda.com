@@ -1,16 +1,17 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const router = express.Router();
 const data = require('../data.json');
 
+express().use(bodyParser.json());
+express().use(bodyParser.urlencoded({extended: false}));
+
 router.get('/users', (req, res) => {
-    let render = '';
-    data.forEach(user => {
-        render += `<li>
-            <p>${user.name}</p>
-            <p>${user.age}</p>
-        </li>`
-    });
-    res.status(200).send(render);
+    if(data.length) {
+        res.status(200).json(data);
+    } else {
+        res.status(404).json({"error": "Empty list"})
+    }
 });
 
 router.get('/user/:id', (req, res) => {
