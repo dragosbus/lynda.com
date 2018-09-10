@@ -7,11 +7,13 @@
     <title>Chat</title>
 </head>
 <body>
-    <form>
+    <form id="form">
         <input type="text" id="name" placeholder="Name">
         <textarea id="message"></textarea>
+        <button type="submit">Send</button>
     </form>
     <div class="chat"></div>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="./chat.js"></script>
 </body>
 </html>
